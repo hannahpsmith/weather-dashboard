@@ -1,0 +1,11 @@
+:root {
+    --dark-blue: rgb(34, 20, 110);
+    --white: rgb(255, 255, 255);
+
+}
+
+.header {
+    background-color: var(--dark-blue);
+    color: white;
+    padding: .6rem;
+}
