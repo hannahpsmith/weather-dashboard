@@ -15,15 +15,15 @@
         <search class="container-fluid">
             <div class="row">
             <h3>Search For a City:</h3>
-            <form>
+            <form for="cityName" title="cityName">
                 <input type="text" id="cityName" placeholder="Seattle"> 
                 <button type="button" id="citySearch" class="btn btn-info">Search</button>
-                <button id="clearHistory" class="btn btn-info">Clear History</button>
+                <button type="button" id="clearHistory" class="btn btn-info">Clear History</button>
             </form>
         </div>
         <!-- <searchHistory id="searchHistory"></searchHistory> -->
         </search>
-        <section>
+        <section class="col-md-9 col-sm-7 d-flex flex-column" id="weatherDisplay">
             <div class="container-fluid" id="currentWeather">
 
             </div>
