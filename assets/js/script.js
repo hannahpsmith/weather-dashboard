@@ -21,7 +21,7 @@ function saveStorage() {
 citySearch.addEventListener("click", function(event) {
     savedCities();
     event.preventDefault();
-    getLocation;
+    getLocation();
 })
 
 //fetch city latitude longtitude
@@ -64,37 +64,38 @@ function getWeather(data) {
         displayWeather(weather);
     })
     .catch(function(error) {
-        console.log('error');
+        console.log('Error fetching weather data', error);
     })
 }
 
-function getForecast(data) {
-    savedCities();
-    const forecastAPI = `https://api.openweathermap.org/data/2.5/forecast?lat=${data[0].lat}&lon=${data[0].lon}&appid=${apiKey}&units=imperial`;
+// function getForecast(location) {
+//     const forecastAPI = `https://api.openweathermap.org/data/2.5/forecast?lat=${location.lat}&lon=${location.lon}&appid=${apiKey}&units=imperial`;
 
-    fetch(forecastAPI)
-    .then(function(response) {
-        return response.json();
-    })
-    .then(function(forecast) {
-        displayForecast(forecast);
-    })
-    .catch(function(error) {
-        console.log('error');
-    })
-}
+
+//     fetch(forecastAPI)
+//     .then(function(response) {
+//         return response.json();
+//     })
+//     .then(function(forecast) {
+//         displayForecast(forecast);
+//     })
+//     .catch(function(error) {
+//         console.log('Error fetching forecast data',);
+//     })
+// }
 
 // display current weather data
-function displayWeather(city, data) {
-    const current = data.list[0];
+function displayWeather(weather) {
     const weatherHtml = `
-          <div class="weather-card">
-        <h2>${city} (${new Date(current.dt * 1000).toLocaleDateString()})</h2>
-        <p><strong>Temp:</strong> ${current.main.temp}°F</p>
-        <p><strong>Wind:</strong> ${current.wind.speed} MPH</p>
-        <p><strong>Humidity:</strong> ${current.main.humidity} %</p>
-        <img src="https://openweathermap.org/img/wn/${current.weather[0].icon}.png" alt="${current.weather[0].description}">
-      </div>
+        <div class="weather-card">
+            <h2>${weather.name}</h2>
+            <p><strong>Temp:</strong> ${weather.main.temp}°F</p>
+            <p><strong>Wind:</strong> ${weather.wind.speed} MPH</p>
+            <p><strong>Humidity:</strong> ${weather.main.humidity} %</p>
+            <img src="https://openweathermap.org/img/wn/${weather.weather[0].icon}.png" alt="${weather.weather[0].description}">
+        </div>
     `;
     currentWeather.innerHTML = weatherHtml;
 }
+
+            // <h2>${city} (${new Date(data.dt * 1000).toLocaleDateString()})</h2>
