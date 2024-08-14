@@ -14,7 +14,7 @@
     <main>
         <div class="container-fluid">
         <div class="row">
-        <search class="col-md-3 col-sm-5 d-flex flex-column">
+        <search class="col-md-3 col-sm=4 d-flex flex-column">
             <h3>Search For a City:</h3>
             <form for="cityName" title="cityName">
                 <input type="text" id="cityName" placeholder="Seattle"> 
@@ -24,11 +24,11 @@
         <!-- <searchHistory id="searchHistory"></searchHistory> -->
         </search>
         <section class="col-md-9 col-sm-7 d-flex flex-column">
-            <div class="border-dark align-middle" id="currentWeather">
+            <div class="align-middle p-2 m-2" id="currentWeather">
 
             </div>
-                <h3 class="text-center">5-Day Forecast</h3>
-            <div id="forecast" class="container-fluid flex-column d-flex">
+            <h3 id="showHeader" style="display: none;" class="text-center">5 Day Forecast:</h3>
+            <div id="forecast" class="d-flex flex-wrap m-2 p2 justify-content-evenly">
             </div>
         </section>
         </div>

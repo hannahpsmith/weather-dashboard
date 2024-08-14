@@ -22,6 +22,7 @@ citySearch.addEventListener("click", function(event) {
     savedCities();
     event.preventDefault();
     getLocation();
+    showHeader(show5DayHeader);
 })
 
 //fetch city latitude longtitude
@@ -35,7 +36,6 @@ function getLocation(city) {
     }
 
     const geoApi = `https://api.openweathermap.org/geo/1.0/direct?q=${search}&limit=1&appid=${apiKey}`;
-    console.log(geoApi)
 
     fetch(geoApi)
     .then(function(response) {
@@ -110,5 +110,17 @@ function displayForecast(weather) {
           <p><strong>Humidity:</strong> ${forecast.main.humidity} %</p>
         </div>
       `).join('');
-    forecast.innerHTML = forecastHtml;
+      forecast.innerHTML = forecastHtml;
 }
+
+const show5DayHeader = document.getElementById('showHeader');
+
+// hides forecast header until city is searched
+function showHeader() {
+    if (show5DayHeader.style.display === 'none') {
+        show5DayHeader.style.display = 'block';
+    } else {
+        show5DayHeader.style.display = 'none';
+    }
+}
+
