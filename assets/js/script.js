@@ -68,34 +68,47 @@ function getWeather(data) {
     })
 }
 
-// function getForecast(location) {
-//     const forecastAPI = `https://api.openweathermap.org/data/2.5/forecast?lat=${location.lat}&lon=${location.lon}&appid=${apiKey}&units=imperial`;
+function getForecast(data) {
+    const forecastAPI = `https://api.openweathermap.org/data/2.5/forecast?lat=${data[0].lat}&lon=${data[0].lon}&appid=${apiKey}&units=imperial`;
 
 
-//     fetch(forecastAPI)
-//     .then(function(response) {
-//         return response.json();
-//     })
-//     .then(function(forecast) {
-//         displayForecast(forecast);
-//     })
-//     .catch(function(error) {
-//         console.log('Error fetching forecast data',);
-//     })
-// }
+    fetch(forecastAPI)
+    .then(function(response) {
+        return response.json();
+    })
+    .then(function(forecast) {
+        displayForecast(forecast);
+    })
+    .catch(function(error) {
+        console.log('Error fetching forecast data',);
+    })
+}
 
 // display current weather data
 function displayWeather(weather) {
     const weatherHtml = `
         <div class="weather-card">
-            <h2>${weather.name}</h2>
+            <h2>${weather.name} (${new Date(weather.dt * 1000).toLocaleDateString()}) <img src="https://openweathermap.org/img/wn/${weather.weather[0].icon}.png" alt="${weather.weather[0].description}"></h2>
             <p><strong>Temp:</strong> ${weather.main.temp}°F</p>
             <p><strong>Wind:</strong> ${weather.wind.speed} MPH</p>
             <p><strong>Humidity:</strong> ${weather.main.humidity} %</p>
-            <img src="https://openweathermap.org/img/wn/${weather.weather[0].icon}.png" alt="${weather.weather[0].description}">
         </div>
     `;
     currentWeather.innerHTML = weatherHtml;
 }
 
-            // <h2>${city} (${new Date(data.dt * 1000).toLocaleDateString()})</h2>
+//display forecast data
+function displayForecast(weather) {
+    const forecastHtml = weather.list
+    .filter((_, index) => index % 8 === 0)
+    .map(forecast => `
+        <div class="forecast-card">
+          <h3>${new Date(forecast.dt * 1000).toLocaleDateString()}</h3>
+          <img src="https://openweathermap.org/img/wn/${forecast.weather[0].icon}.png" alt="${forecast.weather[0].description}">
+          <p><strong>Temp:</strong> ${forecast.main.temp} °F</p>
+          <p><strong>Wind:</strong> ${forecast.wind.speed} MPH</p>
+          <p><strong>Humidity:</strong> ${forecast.main.humidity} %</p>
+        </div>
+      `).join('');
+    forecast.innerHTML = forecastHtml;
+}
