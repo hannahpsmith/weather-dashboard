@@ -3,6 +3,7 @@ const citySearch = document.getElementById('citySearch');
 const cityName = document.getElementById('cityName');
 const currentWeather = document.getElementById('currentWeather');
 const forecast = document.getElementById('forecast');
+const searchHistory = document.getElementById('searchHistory');
 const clearHistory = document.getElementById('clearHistory');
 
 //local storage
@@ -47,7 +48,7 @@ function getLocation(city) {
         userInput.value = '';
     })
     .catch(function(error) {
-        console.log(error);
+        console.log('Error fetching weather data', error);
     })
 }
 
@@ -62,6 +63,15 @@ function getWeather(data) {
     })
     .then(function(weather) {
         displayWeather(weather);
+
+        const city = weather.name;
+        if (!weatherSearchHistory.includes(city)) {
+            weatherSearchHistory.push(city);
+            saveStorage();
+        }
+
+        // savedCities(weatherSearchHistory);
+        updateSearchHistory();
     })
     .catch(function(error) {
         console.log('Error fetching weather data', error);
@@ -80,7 +90,7 @@ function getForecast(data) {
         displayForecast(forecast);
     })
     .catch(function(error) {
-        console.log('Error fetching forecast data',);
+        console.log('Error fetching forecast data', error);
     })
 }
 
@@ -124,3 +134,20 @@ function showHeader() {
     }
 }
 
+function updateSearchHistory() {
+    searchHistory.innerHTML = weatherSearchHistory.map(city => `<button class="history-btn">${city}</button>`).join('');
+    clearHistory.classList.toggle('hidden', weatherSearchHistory.length === 0);
+  }
+  
+  searchHistory.addEventListener('click', (event) => {
+    if (event.target.classList.contains('history-btn')) {
+        getLocation(event.target.textContent);
+    }
+});
+  clearHistory.addEventListener('click', () => {
+    localStorage.removeItem('weatherSearchHistory');
+    weatherSearchHistory = [];
+    updateSearchHistory();
+  });
+
+  updateSearchHistory();

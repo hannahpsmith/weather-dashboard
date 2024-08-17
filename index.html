@@ -16,12 +16,13 @@
         <div class="row">
         <search class="col-md-3 col-sm=4 d-flex flex-column">
             <h3>Search For a City:</h3>
-            <form for="cityName" title="cityName">
+            <form id="cityForm">
+                <label for="cityName">City Name</label>
                 <input type="text" id="cityName" placeholder="Seattle"> 
                 <button type="button" id="citySearch" class="btn btn-info">Search</button>
                 <button type="button" id="clearHistory" class="btn btn-info">Clear History</button>
             </form>
-        <!-- <searchHistory id="searchHistory"></searchHistory> -->
+        <div id="searchHistory"></div>
         </search>
         <section class="col-md-9 col-sm-7 d-flex flex-column">
             <div class="align-middle p-2 m-2" id="currentWeather">
