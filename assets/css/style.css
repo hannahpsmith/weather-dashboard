@@ -10,4 +10,7 @@
     padding: .6rem;
 }
 
-
+.bg-navy {
+    background-color: var(--dark-blue);
+    color:white;
+}

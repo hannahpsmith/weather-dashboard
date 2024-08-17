@@ -23,7 +23,6 @@ citySearch.addEventListener("click", function(event) {
     savedCities();
     event.preventDefault();
     getLocation();
-    showHeader(show5DayHeader);
 })
 
 //fetch city latitude longtitude
@@ -105,6 +104,14 @@ function displayWeather(weather) {
         </div>
     `;
     currentWeather.innerHTML = weatherHtml;
+
+    if (currentWeather.innerHTML.trim() !== '') {
+        currentWeather.classList.add('border', 'border-dark', 'rounded', 'p-3', 'bg-light');
+        currentWeather.classList.remove('mb-3');
+    } else {
+        currentWeather.classList.remove('border', 'border-dark', 'rounded', 'p-3', 'bg-light');
+        currentWeather.classList.add('mb-3');
+    }
 }
 
 //display forecast data
@@ -112,22 +119,24 @@ function displayForecast(weather) {
     const forecastHtml = weather.list
     .filter((_, index) => index % 8 === 0)
     .map(forecast => `
-        <div class="forecast-card">
-          <h3>${new Date(forecast.dt * 1000).toLocaleDateString()}</h3>
-          <img src="https://openweathermap.org/img/wn/${forecast.weather[0].icon}.png" alt="${forecast.weather[0].description}">
-          <p><strong>Temp:</strong> ${forecast.main.temp} °F</p>
-          <p><strong>Wind:</strong> ${forecast.wind.speed} MPH</p>
-          <p><strong>Humidity:</strong> ${forecast.main.humidity} %</p>
-        </div>
+            <div class="bg-navy rounded p-3 mb-3 shadow-sm">
+              <h3>${new Date(forecast.dt * 1000).toLocaleDateString()}</h3>
+              <img src="https://openweathermap.org/img/wn/${forecast.weather[0].icon}.png" alt="${forecast.weather[0].description}">
+              <p><strong>Temp:</strong> ${forecast.main.temp} °F</p>
+              <p><strong>Wind:</strong> ${forecast.wind.speed} MPH</p>
+              <p><strong>Humidity:</strong> ${forecast.main.humidity} %</p>
+            </div>
       `).join('');
       forecast.innerHTML = forecastHtml;
+
+      showHeader();
 }
 
 const show5DayHeader = document.getElementById('showHeader');
 
 // hides forecast header until city is searched
 function showHeader() {
-    if (show5DayHeader.style.display === 'none') {
+    if (forecast.innerHTML.trim() !== '') {
         show5DayHeader.style.display = 'block';
     } else {
         show5DayHeader.style.display = 'none';
@@ -135,7 +144,7 @@ function showHeader() {
 }
 
 function updateSearchHistory() {
-    searchHistory.innerHTML = weatherSearchHistory.map(city => `<button class="history-btn">${city}</button>`).join('');
+    searchHistory.innerHTML = weatherSearchHistory.map(city => `<button class="history-btn btn btn-light text-dark w-100 mb-2">${city}</button>`).join('');
     clearHistory.classList.toggle('hidden', weatherSearchHistory.length === 0);
   }
   
